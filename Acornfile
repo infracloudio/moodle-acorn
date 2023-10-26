@@ -1,0 +1,37 @@
+services: db: image: "ghcr.io/acorn-io/mariadb:v10.11.5-1"
+
+
+containers: {
+	web: {
+		image: "docker.io/bitnami/moodle:4.3"
+		scale: 2
+		ports: publish: "8080:8080/http"
+		env: {
+			MOODLE_DATABASE_USER: "@{service.db.secrets.admin.username}"
+			MOODLE_DATABASE_PASSWORD: "@{service.db.secrets.admin.password}"
+			MOODLE_DATABASE_HOST: "@{service.db.address}"
+			MOODLE_DATABASE_PORT_NUMBER: "@{service.db.port.3306}"
+			MOODLE_DATABASE_NAME: "@{service.db.data.dbName}"
+            // //ALLOW_EMPTY_PASSWORD: "yes"
+			// BITNAMI_DEBUG: "true"
+			// MOODLE_SKIP_BOOTSTRAP: "yes"
+		}
+        dirs: {
+            "/bitnami/moodle": "volume://moodle"
+            "/bitnami/moodledata": "volume://moodledata"
+
+        }
+	}
+}
+
+volumes: {
+    moodle: {
+		size: 2
+		accessModes: ["readWriteMany"]
+		
+	}
+    moodledata:{
+		size: 2
+		accessModes: ["readWriteMany"]
+    }
+}
