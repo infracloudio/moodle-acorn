@@ -1,19 +1,35 @@
-services: db: image: "ghcr.io/acorn-io/mariadb:v10.11.5-1"
+name:        "Moodle Acorn"
+description: "Acorn running Moodle"
+readme:      "./README.md"
+icon:        "./moodle.svg"
 
+args: {
+	moodledbname: "moodledb"
+	moodle_username: "user"
+	moodle_password: "bitnami"
+}
+
+services: db: {
+	image: "ghcr.io/acorn-io/mariadb:v10.11.5-1"
+	serviceArgs: {
+      dbName: args.moodledbname
+  }
+}
 
 containers: {
 	web: {
 		image: "docker.io/bitnami/moodle:4.3"
-		ports: publish: "8080:8080/http"
+		ports: {
+			publish: "80:8080/http"
+		}
 		env: {
 			MOODLE_DATABASE_USER: "@{service.db.secrets.admin.username}"
 			MOODLE_DATABASE_PASSWORD: "@{service.db.secrets.admin.password}"
 			MOODLE_DATABASE_HOST: "@{service.db.address}"
 			MOODLE_DATABASE_PORT_NUMBER: "@{service.db.port.3306}"
 			MOODLE_DATABASE_NAME: "@{service.db.data.dbName}"
-            // //ALLOW_EMPTY_PASSWORD: "yes"
-			//BITNAMI_DEBUG: "true"
-			// MOODLE_SKIP_BOOTSTRAP: "yes"
+			MOODLE_USERNAME: args.moodle_username
+			MOODLE_PASSWORD: args.moodle_password
 		}
         dirs: {
             "/bitnami/moodle": "volume://moodle"
