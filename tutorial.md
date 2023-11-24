@@ -4,7 +4,7 @@
 
 [Acorn](http://www.acorn.io) is a cloud computing platform with a big free sandbox that anyone can use by registering with a GitHub account. It is designed to simplify running modern  cloud-native apps on the public cloud. You use familiar development and deployment workflows based on mainstream container tools without having to deal with provisioning or configuring any underlying cloud resources. Basically it provides all the power of Kubernetes and Terraform, without any of the complexity.
 
-To deploy an application on Acorn we need to define our application as an Acornfile, which will produce the Acorn Image that we can deploy on the platform.  In this tutorial, we will explore how to provision a sample Django Application on Acorn.
+To deploy an application on Acorn we need to define our application as an Acornfile, which will produce the Acorn Image that we can deploy on the platform.  In this tutorial, we will explore how to provision a sample Moodle Application on Acorn.
 
 If you’re the kind of person who likes to skip to the end, you can [deploy the sample application in your sandbox now](https://acorn.io/run/ghcr.io/infracloudio/moodle-acorn:v4.3.0-1?ref=slayer321&name=moodle) and just start poking around in it.  Sandbox deployments in Acorn are restricted by size, and run for two hours, so it should provide plenty of time for you to evaluate and test anything. You can start them over as often as you like, or you can upgrade to a paid Pro account if you want to run something in production. 
 
@@ -61,7 +61,7 @@ _Note: The App will be deployed in the Acorn Sandbox Environment. As the App is 
 
 
 ## Running the Application using acorn CLI
-As mentioned previously, running the acorn application using CLI lets you understand the Acornfile. With the CLI option, you can customize the sample app to your requirement or use your Acorn knowledge to run your own Django application.
+As mentioned previously, running the acorn application using CLI lets you understand the Acornfile. With the CLI option, you can customize the sample app to your requirement or use your Acorn knowledge to run your own Moodle application.
 
 To run the application using CLI you first need to clone the source code repository on your machine.
 
@@ -80,7 +80,7 @@ Below is the Acornfile for deploying the Moodle app that we created earlier:
 
 ![](./assets/moodle-acornfile.png)
 
-There are 2 requirements for running Ruby on Rails Application
+There are 2 requirements for running Moodle Application
 - Application Itself
 - DB
 
