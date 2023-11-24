@@ -10,7 +10,7 @@ If you’re the kind of person who likes to skip to the end, you can [deploy the
 
 If you want to follow along, I’ll walk through the steps to deploy Moodle using Acorn.
 
-_Note: Everything shown in this tutorial can be found in [this repository](https://github.com/infracloudio/moodle-acorn.git)_.
+_Note: Everything shown in this tutorial can be found in [this repository](https://github.com/infracloudio/moodle-acorn)_.
 
 ## Pre-requisites
 
@@ -27,7 +27,7 @@ $ acorn login beta.acorn.io
 ```
 
 ## Deploying the Moodle Application
-In this post we will deploy Moodle
+In this post we will deploy Moodle.
 
 In the Acorn platform, there are two ways you can try this sample application.
 1. Using Acorn platform dashboard.
