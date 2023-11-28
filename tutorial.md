@@ -2,11 +2,11 @@
 
 [Moodle™ LMS](https://moodle.org/) is an open source online Learning Management System widely used at universities, schools, and corporations. It is modular and highly adaptable to any type of online learning.
 
-[Acorn](http://www.acorn.io) is a cloud computing platform with a big free sandbox that anyone can use by registering with a GitHub account. It is designed to simplify running modern  cloud-native apps on the public cloud. You use familiar development and deployment workflows based on mainstream container tools without having to deal with provisioning or configuring any underlying cloud resources. Basically it provides all the power of Kubernetes and Terraform, without any of the complexity.
+[Acorn](http://www.acorn.io) is a  platform that opens up exciting possibilities for hosting Moodle, a widely adopted learning management system. Moodle is chosen by educators and institutions globally for its robust features and adaptability in delivering online courses. By deploying Moodle on Acorn, users can leverage a cloud-native environment with a generous free sandbox accessible to anyone with a GitHub account.
 
-To deploy an application on Acorn we need to define our application as an Acornfile, which will produce the Acorn Image that we can deploy on the platform.  In this tutorial, we will explore how to provision a sample Moodle Application on Acorn.
+To deploy an application on Acorn we need to define our application as an [Acornfile](https://docs.acorn.io/reference/acornfile), which will produce the Acorn Image that we can deploy on the platform.  In this tutorial, we will explore how to provision a sample Moodle Application on Acorn.
 
-If you’re the kind of person who likes to skip to the end, you can [deploy the sample application in your sandbox now](https://acorn.io/run/ghcr.io/infracloudio/moodle-acorn:v4.3.0-1?ref=slayer321&name=moodle) and just start poking around in it.  Sandbox deployments in Acorn are restricted by size, and run for two hours, so it should provide plenty of time for you to evaluate and test anything. You can start them over as often as you like, or you can upgrade to a paid Pro account if you want to run something in production. 
+If you’re the kind of person who likes to skip to the end, you can [deploy the sample application in your sandbox now](https://acorn.io/run/ghcr.io/infracloudio/moodle-acorn:v4.3.0-1?ref=slayer321&name=moodle) and just start poking around in it.  Sandbox deployments in Acorn are restricted by size, and run for two hours, so it should provide plenty of time for you to evaluate and test anything. You can start them over as often as you like, or you can upgrade to a paid Pro account if you want to keep Moodle application running for long durations
 
 If you want to follow along, I’ll walk through the steps to deploy Moodle using Acorn.
 
@@ -14,11 +14,11 @@ _Note: Everything shown in this tutorial can be found in [this repository](https
 
 ## Pre-requisites
 
-- [Acorn CLI](https://docs.acorn.io/installation/installing)
-- Github account to sign up for the Acorn Platform.
+- Acorn CLI: The CLI allows you to interact with the Acorn Runtime as well as Acorn to deploy and manage your applications. Refer to the [Installation documentation](https://docs.acorn.io/installation/installing) to install Acorn CLI for your environment.
+- A GitHub account is required to sign up and use the Acorn Platform.
 
 ## Acorn Login
-Login to the [Acorn Platform](http://beta.acorn.io) using the Github Sign-In option with your Github user.
+Login to the [Acorn Platform](http://beta.acorn.io) using the GitHub Sign-In option with your GitHub user.
 ![](./assets/acorn-login-page.png)
 
 After the installation of Acorn CLI for your OS, you can login to the Acorn platform.
@@ -27,28 +27,28 @@ $ acorn login beta.acorn.io
 ```
 
 ## Deploying the Moodle Application
-In this post we will deploy Moodle.
+In this tutorial we will deploy Moodle.
 
 In the Acorn platform, there are two ways you can try this sample application.
 1. Using Acorn platform dashboard.
 2. Using CLI
 
-The First way is the easiest one where, in just a few clicks you can deploy the Moodle application on the platform and start using it. However, if you want to customize the application use the second option.
+The first way is the easiest one, where, in just a few clicks, you can deploy the Moodle application on the platform and start using it. However, if you want to customize the application, use the second option.
 
 ## Running the application using Dashboard
 
 In this option you use the published Acorn application image to deploy the Moodle application in just a few clicks. It allows you to deploy your applications faster without any additional configurations. Let us see below how you can deploy Moodle app to the Acorn platform dashboard.
 
-1. Login to the [Acorn Platform](https://acorn.io/auth/login)  using the Github Sign-In option with your Github user.
+1. Log in to the [Acorn Platform](https://acorn.io/auth/login)  using the GitHub Sign-In option with your GitHub user.
 2. Select the “Create Acorn” option.
 3. Choose the source for deploying your Acorns
    3.1. Select “From Acorn Image” to deploy the sample Application.
 ![](./assets/select-from-acorn-image.png)
 
    3.2. Provide a name "My Moodle”, use the default Region and provide the URL for the Acorn image and click Create.
-```
-ghcr.io/infracloudio/moodle-acorn:v4.#.#-#
-```
+   ```
+   ghcr.io/infracloudio/moodle-acorn:v4.#.#-#
+   ```
 ![](./assets/moodle-deploy-preview.png)
 
 _Note: The App will be deployed in the Acorn Sandbox Environment. As the App is provisioned on AcornPlatform in the sandbox environment it will only be available for 2 hrs and after that it will be shutdown. Upgrade to a pro account to keep it running longer_.
@@ -78,8 +78,62 @@ We have the Moodle Application ready. Now to run the application we need an Acor
 
 Below is the Acornfile for deploying the Moodle app that we created earlier:
 
-![](./assets/moodle-acornfile.png)
+```
+args: {
+   database_type: "mariadb"
+   mariadbname: "moodledb"
+   postgresdbname: "postgresdb"
+   ...
+   moodle_site_name: "New Site"
+   moodle_lang: "en"
+}
 
+localData: {
+   mariadb: {
+      services: mariadb: {
+      image: "ghcr.io/acorn-io/mariadb:v#.#.#-#"
+      serviceArgs: {
+      dbName: args.mariadbname
+         }
+      }
+   },
+   postgres: {
+      services: postgres:{
+      image: "ghcr.io/acorn-io/postgres:v#.#-#"
+      serviceArgs: {
+      dbName: args.postgresdbname
+         }
+      }
+   }
+}
+std.ifelse(args.database_type == "mariadb",localData.mariadb,localData.postgres)
+
+containers: {
+   web: {
+      image: "docker.io/bitnami/moodle:4.3"
+      ports: {
+      publish: "80:8080/http"
+      }
+      env: {
+      ...
+      MOODLE_PASSWORD: args.moodle_password
+      MOODLE_EMAIL: args.moodle_email
+      MOODLE_SITE_NAME: args.moodle_site_name
+      MOODLE_LANG: args.moodle_lang
+      }
+      dirs: {
+      "/bitnami/moodle": "volume://moodle"
+      "/bitnami/moodledata": "volume://moodledata"
+
+      }
+   }
+}
+
+volumes: {
+   moodle: {size: "2G"}
+   moodledata:{size: "2G"}
+}
+```
 There are 2 requirements for running Moodle Application
 - Application Itself
 - DB
