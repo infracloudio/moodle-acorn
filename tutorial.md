@@ -2,11 +2,9 @@
 
 [Moodle™ LMS](https://moodle.org/) is an open source online Learning Management System widely used at universities, schools, and corporations. It is modular and highly adaptable to any type of online learning.
 
-[Acorn](http://www.acorn.io) is a  platform that opens up exciting possibilities for hosting Moodle, a widely adopted learning management system. Moodle is chosen by educators and institutions globally for its robust features and adaptability in delivering online courses. By deploying Moodle on Acorn, users can leverage a cloud-native environment with a generous free sandbox accessible to anyone with a GitHub account.
+[Acorn](http://www.acorn.io) opens exciting possibilities for hosting Moodle, a globally adopted learning management system. Renowned for its robust features, Moodle is chosen by educators worldwide. Deploying Moodle on Acorn provides a cloud-native environment with a free sandbox accessible to anyone with a GitHub account. To deploy on Acorn, define your application with an [Acornfile](https://docs.acorn.io/reference/acornfile), generating a deployable Acorn Image. This tutorial walks through provisioning a sample Moodle Application on the Acorn platform.
 
-To deploy an application on Acorn we need to define our application as an [Acornfile](https://docs.acorn.io/reference/acornfile), which will produce the Acorn Image that we can deploy on the platform.  In this tutorial, we will explore how to provision a sample Moodle Application on Acorn.
-
-If you’re the kind of person who likes to skip to the end, you can [deploy the sample application in your sandbox now](https://acorn.io/run/ghcr.io/infracloudio/moodle-acorn:v4.3.0-1?ref=slayer321&name=moodle) and just start poking around in it.  Sandbox deployments in Acorn are restricted by size, and run for two hours, so it should provide plenty of time for you to evaluate and test anything. You can start them over as often as you like, or you can upgrade to a paid Pro account if you want to keep Moodle application running for long durations
+If you want to skip to the end, just click [Run in Acorn](https://acorn.io/run/ghcr.io/infracloudio/moodle-acorn:v4.3.0-1?ref=slayer321&name=moodle) to launch the app immediately in a free sandbox environment. All you need to join is a GitHub ID to create an account.
 
 If you want to follow along, I’ll walk through the steps to deploy Moodle using Acorn.
 
@@ -70,7 +68,15 @@ $ git clone https://github.com/infracloudio/moodle-acorn.git
 ```
 Once cloned here’s how the directory structure will look.
 
-![](./assests/moodle-root-dir.png)
+```
+.
+├── Acornfile
+├── LICENSE
+├── moodle.svg
+├── README.md
+└── tutorial.md
+
+```
 
 ### Understanding the Acornfile
 
