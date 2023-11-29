@@ -33,7 +33,7 @@ In the Acorn platform, there are two ways you can try this sample application.
 
 The first way is the easiest one, where, in just a few clicks, you can deploy the Moodle application on the platform and start using it. However, if you want to customize the application, use the second option.
 
-## Running the application using Dashboard
+## Deploying Using Acorn Dashboard
 
 In this option you use the published Acorn application image to deploy the Moodle application in just a few clicks. It allows you to deploy your applications faster without any additional configurations. Let us see below how you can deploy Moodle app to the Acorn platform dashboard.
 
@@ -58,7 +58,7 @@ _Note: The App will be deployed in the Acorn Sandbox Environment. As the App is 
    ![](./assets/moodle-dashboard.png)
 
 
-## Running the Application using acorn CLI
+## Deploying Using Acorn CLI
 As mentioned previously, running the acorn application using CLI lets you understand the Acornfile. With the CLI option, you can customize the sample app to your requirement or use your Acorn knowledge to run your own Moodle application.
 
 To run the application using CLI you first need to clone the source code repository on your machine.
