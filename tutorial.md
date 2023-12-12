@@ -19,13 +19,13 @@ _Note: Everything shown in this tutorial can be found in [this repository](https
 
 ## Acorn Login
 
-Login to the [Acorn Platform](http://beta.acorn.io) using the GitHub Sign-In option with your GitHub user.
+Login to the [Acorn Platform](http://acorn.io) using the GitHub Sign-In option with your GitHub user.
 ![](./assets/acorn-login-page.png)
 
 After the installation of Acorn CLI for your OS, you can login to the Acorn platform.
 
 ```
-$ acorn login beta.acorn.io
+$ acorn login
 ```
 
 ## Deploying the Moodle Application
